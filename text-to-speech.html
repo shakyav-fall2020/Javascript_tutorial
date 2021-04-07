@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>
+            Text-to-speech Javascript
+
+        </title>
+        <meta content="text/html; charset=utf-8" />
+
+    </head>
+    <body>
+
+
+
+        <div>
+            <form>
+                <label for="voices">Choose Voice:</label>
+                <select id="voices" name="voices">
+                  
+                </select>
+                <label>Rate</label>
+                <input type = "range" id="rate" min="1" max="100" value="20"/>
+                <input type = "range" id="pitch" min="0" max="5" value="1"/>
+                <textarea id="message" class=""></textarea>
+                <label>Write message</label>
+                <button type="button" onclick="textToSpeech()">Speak</button>
+                <!-- <a href="#" id="speak" class="">Speak</a> -->
+                
+              </form>
+        </div>
+    </body>
+    <script>
+
+        
+
+        function textToSpeech(){
+
+        let msg = document.getElementById("message").value;
+        let speech = new SpeechSynthesisUtterance();
+        var voices = document.getElementById("voices");
+        //var voices = window.speechSynthesis.getVoices();
+        speechSynthesis.getVoices().forEach(function(voice) {
+
+            var option = document.createElement("option");
+            option.text = voice.name, voice.default ? voice.default :''
+
+            voices.add(option);
+
+            console.log(voice.name, voice.default ? voice.default :'');
+        });
+
+        
+        speech.lang = "en-US";
+        speech.text = msg;
+        speech.volume = 5;
+        speech.pitch = document.getElementById("pitch").value;
+        speech.rate = document.getElementById("rate").value;
+        window.speechSynthesis.speak(speech);
+
+        }
+
+        
+
+
+
+        // $(function () {
+        //     if('speechSynthesis' in window) {
+        //         speechSynthesis.onvoiceschanged = function () {
+        //             var $voicelist = $("#voices");
+        //             if($voicelist.find('option').length == 0){
+        //                 speechSynthesis.getVoices().forEach(function (voice, index){
+        //                     var $option = $('<option>').val(index).html(voice.name + (voice.default ?' (default) ' : ''));
+        //                         $voicelist.append($option);
+        //                         console.log(voice);
+        //                 })
+        //                 $voicelist.select();
+        //             }
+        //         };
+        //         $("#speak").click(function () {
+        //             var text = $("#message").val();
+        //             var msg = new SpeechSynthesisUtterance();
+        //             var voices = window.speechSynthesis.getVoices();
+        //             msg.voice = voices[$("#voices").val()];
+        //             msg.rate = $("#rate").val()/10;
+        //             msg.pitch = $("#pitch").val();
+        //             msg.text = text;
+        //             msg.onend = function (e) {
+        //                 console.log("finished in " + event.elapsedTime +"seconds");
+                        
+        //             };
+        //             speechSynthesis.speak(msg);
+        //         });
+        //     }else{
+        //         console.log("Unable to read");
+        //     }
+        // });
+    </script>
+    
+</html>
